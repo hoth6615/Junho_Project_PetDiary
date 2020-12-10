@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/tab1"
+        android:checked="true"
+        android:enabled="true"
+        android:title="메인"
+        app:showAsAction="always"
+        android:icon="@drawable/icon_main" />
+    <item
+        android:id="@+id/tab2"
+        android:enabled="true"
+        android:title="서브"
+        app:showAsAction="always"
+        android:icon="@drawable/icon_sub" />
+    <item
+        android:id="@+id/tab3"
+        android:enabled="true"
+        android:title="새글"
+        app:showAsAction="always"
+        android:icon="@drawable/icon_newpost" />
+    <item
+        android:id="@+id/tab4"
+        android:enabled="true"
+        android:title="마이"
+        app:showAsAction="always"
+        android:icon="@drawable/icon_mypage" />
+    <item
+        android:id="@+id/tab5"
+        android:enabled="true"
+        android:title="친구"
+        app:showAsAction="always"
+        android:icon="@drawable/icon_friends" />
+</menu>

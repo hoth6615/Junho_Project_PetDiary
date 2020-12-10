@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:id="@+id/addFriend"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="친구추가" >
+    </item>
+
+    <item android:id="@+id/edit"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="수정" />
+
+    <item android:id="@+id/Delete"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="삭제" />
+
+    <item android:id="@+id/share"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="공유" >
+    </item>
+
+</menu>

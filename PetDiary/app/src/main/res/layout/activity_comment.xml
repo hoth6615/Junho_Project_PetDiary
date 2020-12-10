@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/first_Square"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/button"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_profile"
+        app:cardCornerRadius="100dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/Profile_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.cardview.widget.CardView>
+
+
+
+    <kr.co.prnd.readmore.ReadMoreTextView
+        android:id="@+id/PostText_view"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="10dp"
+        android:autoSizeTextType="uniform"
+        android:layout_below="@id/cardView_profile"
+        android:textColor="#000000"
+        android:text="내용"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:readMoreColor="@android:color/darker_gray"
+        app:readMoreMaxLine="2"
+        app:readMoreText="...더보기"/>
+
+    <TextView
+        android:id="@+id/Profile_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@+id/cardView_profile"
+        android:text="프로필 닉네임"
+        android:textColor="#000000" />
+
+    <!---댓글창 기본화면-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comment_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/PostText_view"
+        android:layout_above="@+id/Cardview_Image"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/Cardview_Image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="75dp">
+
+        <ImageView
+            android:id="@+id/bottom_Profile_Image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_person"/>
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:id="@+id/scroll_input_text"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/input_button"
+        android:layout_toRightOf="@id/Cardview_Image">
+
+        <EditText
+            android:id="@+id/text_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="댓글 입력"
+            android:maxLength="40"/>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/input_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button"
+        android:text="입력" />
+
+
+</RelativeLayout>

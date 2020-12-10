@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/animalPage_more"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/more" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/animalPage_CardView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/cardview_dark_background"
+            app:cardCornerRadius="100dp"
+            app:cardElevation="10dp">
+
+            <ImageView
+                android:id="@+id/animalPage_Image"
+                android:layout_width="match_parent"
+                android:layout_height="146dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/paw"
+
+                />
+        </androidx.cardview.widget.CardView>
+
+
+        <!--android:background="@android:color/transparent"-->
+
+
+        <!--    <EditText-->
+        <!--        android:id="@+id/animalPage_anniversary"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_gravity="center"-->
+        <!--        android:layout_marginTop="30dp"-->
+        <!--        android:background="@android:color/transparent"-->
+
+
+        <!--        android:focusable="false"-->
+        <!--        android:gravity="center"-->
+        <!--        android:scrollHorizontally="true"-->
+        <!--        android:maxLines="1"-->
+        <!--        android:ellipsize="end"-->
+        <!--        android:inputType="text"-->
+        <!--        android:hint="기념일을 입력해주세요" />-->
+
+        <EditText
+            android:id="@+id/animalPage_name"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@android:color/transparent"
+
+            android:ellipsize="end"
+            android:focusable="false"
+            android:gravity="center"
+            android:hint="동물 이름을 입력해주세요"
+
+            android:inputType="text"
+            android:maxLines="1"
+            android:scrollHorizontally="true" />
+
+        <EditText
+            android:id="@+id/animalPage_memo"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="46dp"
+            android:background="@android:color/transparent"
+            android:focusable="false"
+            android:gravity="center"
+
+            android:hint="동물에 대한 정보를 넣어주세요"
+            android:maxLines="6" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:gravity="bottom|right">
+
+            <Button
+                android:id="@+id/animalPage_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:background="@color/colorPrimaryDark"
+
+                android:text="저장" />
+            <!--        android:visibility="invisible"-->
+
+            <Button
+                android:id="@+id/animalPage_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:background="@color/colorPrimaryDark"
+
+                android:text="취소" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include
+        layout="@layout/view_loader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+</RelativeLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Comment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_profile"
+        app:cardCornerRadius="100dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/first_Square"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_person"
+            android:background="@android:color/transparent"
+            android:id="@+id/CO_Profile_image"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_below="@+id/first_Square"
+        android:layout_marginTop="30dp"
+        android:id="@+id/CO_Profile_Name"
+        android:layout_alignBaseline="@id/cardView_profile"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/cardView_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:text="닉네임"/>
+
+    <TextView
+        android:id="@+id/CO_comment_view"
+        android:layout_below="@+id/first_Square"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@+id/CO_Profile_Name"
+        android:layout_width="match_parent"
+        android:textColor="#000000"
+        android:layout_height="25dp"
+        android:text="댓글 내용"/>
+
+</RelativeLayout>
