@@ -204,18 +204,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
         onPopupButton = (Button) holder.itemView.findViewById(R.id.onPopupButton);
         onPopupButton.setOnClickListener(new View.OnClickListener() {
-
-            String uids = uid;
-            //내 uid
-            String uids2 = arrayList.get(position).getUid();
-
-            //게시물 정보 uid
             @Override
             public void onClick(final View view) {
-                if (uids.equals(uids2)) {
+                if (uid.equals(arrayList.get(position).getUid())) {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-
-                    CharSequence info[] = new CharSequence[]{"Edit", "Delete", "Share"};
+                    CharSequence info[] = new CharSequence[]{"수정", "삭제"};
                     builder.setTitle("");
                     builder.setItems(info, new DialogInterface.OnClickListener() {
                         @Override
@@ -224,7 +217,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                             switch (which) {
                                 case 0:
                                     Intent intent = new Intent(context, ContentEditActivity.class);
-
                                     intent.putExtra("imageUrl1", arrayList.get(position).getImageUrl1());
                                     intent.putExtra("imageUrl2", arrayList.get(position).getImageUrl2());
                                     intent.putExtra("imageUrl3", arrayList.get(position).getImageUrl3());
@@ -233,38 +225,25 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                     intent.putExtra("category", arrayList.get(position).getCategory());
                                     intent.putExtra("content", arrayList.get(position).getContent());
                                     intent.putExtra("postID", arrayList.get(position).getPostID());
-
                                     context.startActivity(intent);
                                     Toast.makeText(view.getContext(), "Edit", Toast.LENGTH_SHORT).show();
                                     break;
                                 case 1:
                                     PostDelete(view,position);
                                     break;
-                                case 2:
-                                    Intent msg = new Intent(Intent.ACTION_SEND);
-                                    msg.addCategory(Intent.CATEGORY_DEFAULT);
-                                    msg.putExtra(Intent.EXTRA_SUBJECT, "주제");
-                                    msg.putExtra(Intent.EXTRA_TEXT, "내용");
-                                    msg.putExtra(Intent.EXTRA_TITLE, "제목");
-                                    msg.setType("text/plain");
-                                    view.getContext().startActivity(Intent.createChooser(msg, "공유"));
-
-                                    break;
                             }
                             dialog.dismiss();
                         }
                     });
-
                     builder.show();
-
                 } else {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     final CharSequence[][] info = new CharSequence[1][1];
                     if(checkFriend){
-                        info[0] = new CharSequence[]{"친구삭제", "신고하기", "사용자 차단", "공유"};
+                        info[0] = new CharSequence[]{"친구삭제", "사용자 차단"};
                     } else {
-                        info[0] = new CharSequence[]{"친구추가", "신고하기", "사용자 차단", "공유"};
+                        info[0] = new CharSequence[]{"친구추가", "사용자 차단"};
                     }
                     builder.setTitle("");
                     builder.setItems(info[0], new DialogInterface.OnClickListener() {
@@ -285,9 +264,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                     }
                                     break;
                                 case 1:
-                                    //Toast.makeText(view.getContext(), "신고하기", Toast.LENGTH_SHORT).show();
-                                    break;
-                                case 2:
                                     BlockFriendInfo blockFriendInfo = new BlockFriendInfo();
                                     blockFriendInfo.setFriendUid(arrayList.get(position).getUid());
                                     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -304,22 +280,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                             });
                                     Toast.makeText(view.getContext(), "사용자를 차단하였습니다.", Toast.LENGTH_SHORT).show();
                                     break;
-                                case 3:
-
-                                    Toast.makeText(view.getContext(), "공유", Toast.LENGTH_SHORT).show();
-                                    break;
                             }
                             dialog.dismiss();
                         }
                     });
-
                     builder.show();
-
                 }
             }
-
         });
-
         wormDotsIndicator = (WormDotsIndicator) holder.itemView.findViewById(R.id.worm_dots_indicator);
         wormDotsIndicator.setViewPager(viewPager);
     }
@@ -397,22 +365,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-
                                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                                         DocumentReference washingtonRef = db.collection("post").document(arrayList.get(pos).getPostID());
-
-
                                         int favoritePlus = arrayList.get(pos).getFavoriteCount();
-                                        Log.d("121", "onSuccess: 값좀알자!!!!"+"//"+ favoritePlus);
-
                                         favoritePlus =favoritePlus+1;
-
                                         arrayList.get(pos).setFavoriteCount(favoritePlus);
-
-
                                         LikeText.setText(String.valueOf(favoritePlus));
-
-// Set the "isCapital" field of the city 'DC'
                                         washingtonRef
                                                 .update("favoriteCount", favoritePlus)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -427,7 +385,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                                         Log.w("실패", "Error updating document", e);
                                                     }
                                                 });
-
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -441,21 +398,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-
-                                //    if(arrayList.get(pos).getFavoriteCount()!=0) {
                                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                                         DocumentReference washingtonRef = db.collection("post").document(arrayList.get(pos).getPostID());
-
-
                                         int favoriteMinos = arrayList.get(pos).getFavoriteCount();
-
                                         favoriteMinos = favoriteMinos - 1;
-
-
-// Set the "isCapital" field of the city 'DC'
                                         arrayList.get(pos).setFavoriteCount(favoriteMinos);
                                         LikeText.setText(String.valueOf(favoriteMinos));
-
                                         washingtonRef
                                                 .update("favoriteCount", favoriteMinos)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -470,8 +418,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                                         Log.w("실패", "Error updating document", e);
                                                     }
                                                 });
-
-
                                         Log.d("CustomAdapter", "DocumentSnapshot successfully deleted!");
                               //      }
                                     }
@@ -488,17 +434,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         }
     }
 
-
 //친구 삭제
     public void FriendsDelete(final View view, final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-
         builder.setTitle("정말 삭제하시겠습니까?")
                 .setCancelable(false)
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-
                         DatabaseReference friend = firebaseDatabase.getReference("friend").child(user.getUid() + "/" + arrayList.get(position).getUid());
                         FriendInfo friendInfo = new FriendInfo();
                         friend.setValue(friendInfo);
@@ -507,16 +450,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                         notifyItemRemoved(position);
                         notifyItemRangeChanged(position, getItemCount());
                         Toast.makeText(context, "친구를 삭제하였습니다.", Toast.LENGTH_SHORT).show();
-
                     }
                 })
                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                     }
                 });
-
         AlertDialog dialog = builder.create();
         dialog.show();
     }
@@ -524,38 +464,23 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     //게시글 삭제
     public void PostDelete(final View view, final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-
-
         builder.setTitle("정말 삭제하시겠습니까?")
                 .setCancelable(false)
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-
                         FirebaseStorage storage = FirebaseStorage.getInstance();
                         final StorageReference storageRef = storage.getReference();
-
                         String[] splitText =  arrayList.get(position).getPostID().split("_");
-
-                        Log.d("splitText", "onClick: splitText의값은"+splitText[0]+"_"+splitText[1]);
-
-
                         String image[] = new String[5];
-
                         image[0] = arrayList.get(position).getImageUrl1();
                         image[1] = arrayList.get(position).getImageUrl1();
                         image[2] = arrayList.get(position).getImageUrl1();
                         image[3] = arrayList.get(position).getImageUrl1();
                         image[4] = arrayList.get(position).getImageUrl1();
-
                         for(int i=0; i<5; i++) {
-
                             if (image[i]!=null) {
                                 StorageReference desertRef = storageRef.child("images/" + splitText[0] + "_" + splitText[1] + "_postImg_"+i);
-
-                                Log.d("날짜정보", "onClick: 날짜 정보" + arrayList.get(position).getDate());
-                                Log.d("날짜정보", "onClick: 날짜 정보" + arrayList.get(position).getDate() + "_postImg_0");
-
                                 // Delete the file
                                 desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -568,11 +493,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                         // Uh-oh, an error occurred!
                                     }
                                 });
-
                             }
                         }
 
-                        // 로그아웃
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         db.collection("post").document(arrayList.get(position).getPostID())
                                 .delete()
@@ -580,8 +503,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Log.d("@@@", "DocumentSnapshot successfully deleted!");
-
                                         arrayList.remove(position);
                                         notifyItemRemoved(position);
                                         //this line below gives you the animation and also updates the
@@ -592,14 +513,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Log.w("@@@", "Error deleting document", e);
                                     }
                                 });
 
                     }
                 })
                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                     }

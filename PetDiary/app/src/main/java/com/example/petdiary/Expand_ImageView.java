@@ -192,15 +192,10 @@ public class Expand_ImageView extends AppCompatActivity {
         }
 
         findViewById(R.id.onPopupButton).setOnClickListener(new View.OnClickListener(){
-            //내 uid
-            String myuid = myuid_server;
-            //게시글 uid
-            String content_uid = uid;
             @Override
-
             public void onClick(final View view) {
-                if (myuid.equals(content_uid)) {
-                    CharSequence info[] = new CharSequence[]{"Edit", "Delete", "Share"};
+                if (myuid_server.equals(uid)) {
+                    CharSequence info[] = new CharSequence[]{"수정", "삭제"};
                     final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     builder.setTitle("");
                     builder.setItems(info, new DialogInterface.OnClickListener() {
@@ -228,15 +223,6 @@ public class Expand_ImageView extends AppCompatActivity {
                                 case 1:
                                     EXpandPostDelete(view);
                                     break;
-                                case 2:
-                                    Intent msg = new Intent(Intent.ACTION_SEND);
-                                    msg.addCategory(Intent.CATEGORY_DEFAULT);
-                                    msg.putExtra(Intent.EXTRA_SUBJECT, "주제");
-                                    msg.putExtra(Intent.EXTRA_TEXT, "내용");
-                                    msg.putExtra(Intent.EXTRA_TITLE, "제목");
-                                    msg.setType("text/plain");
-                                    view.getContext().startActivity(Intent.createChooser(msg, "공유"));
-                                    break;
                             }
                             dialog.dismiss();
                         }
@@ -245,7 +231,7 @@ public class Expand_ImageView extends AppCompatActivity {
                 } else {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     if(friendChecked.equals("checked")){
-                        final CharSequence info[] = new CharSequence[]{"친구삭제", "신고하기", "사용자 차단", "게시물 숨기기"};
+                        final CharSequence info[] = new CharSequence[]{"친구삭제", "사용자 차단"};
                         builder.setTitle("");
                         builder.setItems(info, new DialogInterface.OnClickListener() {
                             @Override
@@ -256,20 +242,14 @@ public class Expand_ImageView extends AppCompatActivity {
                                         ExpandFriendsDelete(view);
                                         break;
                                     case 1:
-                                        Toast.makeText(view.getContext(), "신고하기", Toast.LENGTH_SHORT).show();
-                                        break;
-                                    case 2:
                                         Toast.makeText(view.getContext(), "사용자 차단", Toast.LENGTH_SHORT).show();
-                                        break;
-                                    case 3:
-                                        Toast.makeText(view.getContext(), "게시물 숨기기", Toast.LENGTH_SHORT).show();
                                         break;
                                 }
                                 dialog.dismiss();
                             }
                         });
                     } else {
-                        final CharSequence info[] = new CharSequence[]{"친구추가", "신고하기", "사용자 차단", "게시물 숨기기"};
+                        final CharSequence info[] = new CharSequence[]{"친구추가", "사용자 차단"};
                         builder.setTitle("");
                         builder.setItems(info, new DialogInterface.OnClickListener() {
                             @Override
@@ -287,9 +267,6 @@ public class Expand_ImageView extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), "친구를 추가하였습니다.", Toast.LENGTH_SHORT).show();
                                         break;
                                     case 1:
-                                        Toast.makeText(view.getContext(), "신고하기", Toast.LENGTH_SHORT).show();
-                                        break;
-                                    case 2:
                                         BlockFriendInfo blockFriendInfo = new BlockFriendInfo();
                                         blockFriendInfo.setFriendUid(uid);
                                         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -306,11 +283,6 @@ public class Expand_ImageView extends AppCompatActivity {
                                                 });
                                         Toast.makeText(view.getContext(), "사용자 차단", Toast.LENGTH_SHORT).show();
                                         break;
-                                    case 3:
-
-                                        Toast.makeText(view.getContext(), "게시물 숨기기", Toast.LENGTH_SHORT).show();
-
-                                        break;
                                 }
                                 dialog.dismiss();
                             }
@@ -322,7 +294,6 @@ public class Expand_ImageView extends AppCompatActivity {
         });
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         bookmark_button = (CheckBox)findViewById(R.id.bookmark_button);
         if(bookmarkChecked.equals("checked")){
             bookmark_button.setChecked(true);
@@ -383,17 +354,10 @@ public class Expand_ImageView extends AppCompatActivity {
 
                                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                                     DocumentReference washingtonRef = db.collection("post").document(postID);
-
-
                                     int favoritePlus = favoriteCount;
-                                    Log.d("ddsdsds", "onSuccess: favoriteCount"+favoriteCount);
-                                    Log.d("121", "onSuccess: 값좀알자!!!!"+"//"+ favoritePlus);
-
                                     favoritePlus =favoritePlus+1;
                                     favoriteCount=favoritePlus;
                                     LikeText.setText(String.valueOf(favoriteCount));
-
-// Set the "isCapital" field of the city 'DC'
                                     washingtonRef
                                             .update("favoriteCount", favoriteCount)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -422,18 +386,15 @@ public class Expand_ImageView extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-
                                    // if(favoriteCount!=0) {
                                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                                         DocumentReference washingtonRef = db.collection("post").document(postID);
-
                                         int favoriteMinus = favoriteCount;
 
                                         favoriteMinus = favoriteMinus - 1;
                                         favoriteCount = favoriteMinus;
                                         LikeText.setText(String.valueOf(favoriteCount));
 
-// Set the "isCapital" field of the city 'DC'
                                         washingtonRef
                                                 .update("favoriteCount", favoriteCount)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -479,14 +440,9 @@ public class Expand_ImageView extends AppCompatActivity {
                     content = data.getStringExtra("content");
                     imageUrl1 = data.getStringExtra("imageUrl1");
                     imageUrl2 = data.getStringExtra("imageUrl2");
-                    Log.d("ㅍ", "onActivityResult: 값은?"+imageUrl2);
                     imageUrl3= data.getStringExtra("imageUrl3");
-                    Log.d("ㅍ", "onActivityResult: 값은?"+imageUrl3);
                     imageUrl4 = data.getStringExtra("imageUrl4");
-                    Log.d("ㅍ", "onActivityResult: 값은?"+imageUrl4);
                     imageUrl5 = data.getStringExtra("imageUrl5");
-                    Log.d("ㅍ", "onActivityResult: 값은?"+imageUrl5);
-
 
                     post_content = findViewById(R.id.main_textView);
                     post_content.setText(content);
@@ -505,10 +461,9 @@ public class Expand_ImageView extends AppCompatActivity {
     }
 
 
-//친구삭제
+    //친구삭제
     public void ExpandFriendsDelete(final View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-
 
         builder.setTitle("정말 삭제하시겠습니까?")
                 .setCancelable(false)
@@ -516,14 +471,12 @@ public class Expand_ImageView extends AppCompatActivity {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
 
-                        //Toast.makeText(view.getContext(), "deleteFriend", Toast.LENGTH_SHORT).show();
                         friendChecked = "unchecked";
                         firebaseDatabase = FirebaseDatabase.getInstance();
                         DatabaseReference friend = firebaseDatabase.getReference("friend").child(user.getUid()+"/"+uid);
                         FriendInfo friendInfo = new FriendInfo();
                         friend.setValue(friendInfo);
                         Toast.makeText(getApplicationContext(), "친구를 삭제하였습니다.", Toast.LENGTH_SHORT).show();
-
                     }
                 })
                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -547,19 +500,11 @@ public class Expand_ImageView extends AppCompatActivity {
         builder.setTitle("정말 삭제하시겠습니까?")
                 .setCancelable(false)
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int whichButton) {
-
                         FirebaseStorage storage = FirebaseStorage.getInstance();
                         final StorageReference storageRef = storage.getReference();
-// Create a reference to the file to delete
-
-
 
                         String[] splitText =  postID.split("_");
-
-                        Log.d("splitText", "onClick: splitText의값은"+splitText[0]+"_"+splitText[1]);
-
 
                         String image[] = new String[5];
 
@@ -574,7 +519,6 @@ public class Expand_ImageView extends AppCompatActivity {
                             if (image[i]!=null) {
                                 StorageReference desertRef = storageRef.child("images/" + splitText[0] + "_" + splitText[1] + "_postImg_"+i);
 
-// Delete the file
                                 desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -593,39 +537,20 @@ public class Expand_ImageView extends AppCompatActivity {
                         db.collection("post").document(postID)
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
-
                                     @Override
                                     public void onSuccess(Void aVoid) {
-
                                         onBackPressed();
-                                        Log.d("@@@", "오류가나는이유가뭐야?!");
-
                                     }
-//                                                    finish();
-//                                                    overridePendingTransition(0, 0);
-//                                                    startActivity(getIntent());
-//                                                    overridePendingTransition(0, 0);
-
-//                                                arrayList.remove(position);
-//                                                notifyItemRemoved(position);
-//                                                //this line below gives you the animation and also updates the
-//                                                //list items after the deleted item
-//                                                notifyItemRangeChanged(position, getItemCount());
-                                    // }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Log.w("@@@", "Error deleting document", e);
                                     }
                                 });
-
                     }
                 })
                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int whichButton) {
-
                     }
                 });
 
